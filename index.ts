@@ -5,9 +5,13 @@ import express from "express";
 import signale from "signale";
 import bodyParser from "body-parser";
 import database from "./database";
+import seed from "./database/seed";
 
 database(process.env.DB_CONNECTION).then((connection) => {
     const PORT = process.env.NODE_ENV === "production" ? 4000 : 3000;
+    if (process.env.NODE_ENV !== "production") {
+        seed();
+    }
     const app = express();
 
     app.use(bodyParser.json());
