@@ -6,6 +6,7 @@ import signale from "signale";
 import bodyParser from "body-parser";
 import database from "./database";
 import seed from "./database/seed";
+import { getArtistByName, getSongByName } from "./services";
 
 database(process.env.DB_CONNECTION).then((connection) => {
     const PORT = process.env.NODE_ENV === "production" ? 4000 : 3000;
@@ -18,13 +19,16 @@ database(process.env.DB_CONNECTION).then((connection) => {
 
     app.get("/health-check", (req, res) => res.sendStatus(200));
 
-    app.get("/song", (req, res) => {
+    app.get("/song/:songName", async (req, res) => {
         signale.info("getting song");
-        // const song = await
+        const song = await getSongByName(req.params.songName);
+        res.send(song);
     });
 
-    app.get("/artist", (req, res) => {
+    app.get("/artist/:artistName", async (req, res) => {
         signale.info("getting artist");
+        const artist = await getArtistByName(req.params.artistName);
+        res.send(artist);
     });
 
     app.listen(PORT, () => signale.info(`Server running at ${PORT}`));

@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, JoinTable } from "typeorm";
 import { Song } from "../";
 
 @Entity()
@@ -9,7 +9,8 @@ class Artist {
     @Column()
     public name: string;
 
-    @OneToMany((type) => Song, (song) => song.artist, { cascade: true })
+    @OneToMany((type) => Song, (song) => song.artist, { cascade: true, eager: true })
+    @JoinTable()
     public songs: Song[];
 }
 
