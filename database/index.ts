@@ -12,6 +12,5 @@ export default async (connectionString: string): Promise<Connection> => {
             Account,
             Playlist,
         ],
-        synchronize: process.env.NODE_ENV !== "production",
     });
 };
