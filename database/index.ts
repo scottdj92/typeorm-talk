@@ -1,6 +1,6 @@
 import { createConnection, Connection } from "typeorm";
 // import entities here
-import { Artist, Song } from "../entities";
+import { Artist, Song, Playlist, Account } from "../entities";
 
 export default async (connectionString: string): Promise<Connection> => {
     return await createConnection({
@@ -9,6 +9,8 @@ export default async (connectionString: string): Promise<Connection> => {
         entities: [
             Artist,
             Song,
+            Account,
+            Playlist,
         ],
         synchronize: process.env.NODE_ENV !== "production",
     });
